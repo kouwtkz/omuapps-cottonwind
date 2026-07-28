@@ -19,7 +19,7 @@ export default defineConfig({
 			}),
 			paths: {
 				/** @ts-ignore **/
-				base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+				base: process.argv.includes('dev') ? '' : '/omuapps'
 			}
 		})
 	],
