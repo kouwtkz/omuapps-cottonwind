@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  import { ORIGIN } from "./tutorial";
+</script>
+
+<h1>OMUAPPSチュートリアルアプリ</h1>
+<a href={`http://localhost:26423/index/install?index_url=${ORIGIN}/_omuapps.json`}>インストールする</a>
