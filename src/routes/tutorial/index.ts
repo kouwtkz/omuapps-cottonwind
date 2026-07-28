@@ -1,11 +1,8 @@
 // src/routes/tutorial/index.ts
 export const prerender = true;
 
-import { dev } from "$app/environment";
 import { App } from "@omujs/omu";
-
-export const ORIGIN = dev ? 'http://localhost:5173' : 'https://kouwtkz.github.io/omuapps-tutorial' // 公開先のOrigin (開発時はローカルサーバーのOriginを指定する)
-export const NAMESPACE = 'io.github.kouwtkz' // 公開先の逆順ドメイン
+import { NAMESPACE, ORIGIN } from "../define";
 
 // 管理画面用のアプリ情報
 export const TUTORIAL_APP = new App(`${NAMESPACE}:tutorial`, {
