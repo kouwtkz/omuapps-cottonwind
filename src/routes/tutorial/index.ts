@@ -13,7 +13,7 @@ export const TUTORIAL_APP = new App(`${NAMESPACE}:tutorial`, {
         locale: "ja", // アプリの推奨言語
         name: "チュートリアルアプリ", // アプリの名前
         description: "初めてのアプリ", // 一行の説明をつけることを推奨
-        icon: 'ti-typography' // アイコンのURL、もしくは先端にti-をつけることでTabler Iconsのアイコンを指定することができます
+        icon: 'ti-align-box-left-middle' // アイコンのURL、もしくは先端にti-をつけることでTabler Iconsのアイコンを指定することができます
     },
 });
 
