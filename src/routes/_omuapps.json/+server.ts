@@ -4,10 +4,8 @@ import { AppIndexRegistry } from '@omujs/omu';
 import { json } from '@sveltejs/kit';
 import { NAMESPACE } from '../define';
 import { TUTORIAL_APP } from '../tutorial';
-import { TUTORIAL_APP2 } from '../tutorial2';
+import { TUTORIAL_APP2 } from '../chatRing';
 import type { RequestHandler } from './$types';
-
-export const prerender = true;
 
 export const GET: RequestHandler = () => {
     return json(
