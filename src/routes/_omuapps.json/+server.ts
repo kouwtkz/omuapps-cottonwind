@@ -14,8 +14,8 @@ export const GET: RequestHandler = () => {
         AppIndexRegistry.build({
             id: `${NAMESPACE}:apps`,
             meta: {
-                name: 'めぇめぇアプリ（仮）', // 名前
-                note: 'チュートリアルめぇ', // 1行の説明
+                name: 'Cottonwind Apps', // 名前
+                note: 'こっとんうぃんどによるアプリ', // 1行の説明
             },
             apps: [TUTORIAL_APP, TUTORIAL_APP2], // 配信するアプリの配列
         }).toJSON()
