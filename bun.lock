@@ -4,6 +4,10 @@
   "workspaces": {
     "": {
       "name": "example",
+      "dependencies": {
+        "@omujs/obs": "^0.10.7",
+        "@omujs/omu": "^0.10.7",
+      },
       "devDependencies": {
         "@sveltejs/adapter-auto": "^7.0.1",
         "@sveltejs/kit": "^2.63.0",
@@ -33,6 +37,10 @@
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.6", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1" } }, "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg=="],
+
+    "@omujs/obs": ["@omujs/obs@0.10.7", "", { "peerDependencies": { "@omujs/omu": "0.10.7" } }, "sha512-nRQlyK38R3x0XX+0nrlQ2J4haPVx6BnFTp0U3PCCLsuH/P6rBCE3ZXbxQK6nAU7tFONYypJXNwxsLogxb6nOcw=="],
+
+    "@omujs/omu": ["@omujs/omu@0.10.7", "", {}, "sha512-icwW4zjOs2SkUE42z27C1G3F4ZtmRO+OM8oknQeZ5d4wZTaHQze2H6IJDx05TavKFGEv72V5H4YjYoKidAoa3g=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.139.0", "", {}, "sha512-r9gHphtCs+1M7J0pw6Sn/hh/Wpa/iQrOOkrNAlVLF/gHq+/CJmHIWKKUUhdWjcD6CIa8idarspCsASiXCXvFUw=="],
 
