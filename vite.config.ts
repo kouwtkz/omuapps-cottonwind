@@ -17,10 +17,6 @@ export default defineConfig({
 			adapter: adapter({
 				fallback: '404.html'
 			}),
-			paths: {
-				/** @ts-ignore **/
-				base: process.argv.includes('dev') ? '' : '/omuapps'
-			}
 		})
 	],
 	ssr: {
