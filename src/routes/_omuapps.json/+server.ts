@@ -2,9 +2,10 @@
 
 import { AppIndexRegistry } from '@omujs/omu';
 import { json } from '@sveltejs/kit';
-import { NAMESPACE, TUTORIAL_APP } from '../tutorial';
-import type { RequestHandler } from './$types';
+import { NAMESPACE } from '../define';
+import { TUTORIAL_APP } from '../tutorial';
 import { TUTORIAL_APP2 } from '../tutorial2';
+import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
