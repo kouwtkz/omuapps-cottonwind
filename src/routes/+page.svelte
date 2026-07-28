@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ORIGIN } from "./tutorial";
+  import { ORIGIN } from "./define";
 </script>
 
 <h1>OMUAPPSチュートリアルアプリ</h1>
