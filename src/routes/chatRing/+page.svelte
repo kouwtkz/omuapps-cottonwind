@@ -16,10 +16,7 @@
   let audioFile: File | null = $state(null);
 
   // 必要な権限を要求します
-  omu.permissions.require(
-    OmuPermissions.GENERATE_TOKEN_PERMISSION_ID,
-    ChatPermissions.CHAT_PERMISSION_ID,
-  );
+  omu.permissions.require(ChatPermissions.CHAT_PERMISSION_ID);
 
   // ブラウザのみでAPIに接続します
   if (browser) {
