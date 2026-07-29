@@ -29,9 +29,13 @@
   let formElement: HTMLFormElement | null = null;
   chatRingApp.indexedData.addEventListener("dbSet", () => {
     chatRingApp.load().then((d) => {
-      if (d?.file) {
+      if (d) {
         audioFile = d.file;
-        if (audioElement) audioElement.src = URL.createObjectURL(d.file);
+        if (audioElement) {
+          if (d.file) audioElement.src = URL.createObjectURL(d.file);
+          audioElement.volume = d.volume;
+          audioElement.muted = d.muted;
+        }
       }
     });
   });
@@ -60,14 +64,23 @@
           disabled={!audioFile}
           onclick={() => {
             audioFile = null;
-            chatRingApp.delete();
+            chatRingApp.save({ file: null });
             if (audioElement) audioElement.src = "";
           }}
         >
           削除
         </button>
       </p>
-      <audio controls bind:this={audioElement} />
+      <audio
+        controls
+        bind:this={audioElement}
+        onvolumechange={() => {
+          chatRingApp.save({
+            volume: audioElement!.volume,
+            muted: audioElement!.muted,
+          });
+        }}
+      ></audio>
     </div>
     <form bind:this={formElement}>
       <Button
@@ -88,7 +101,7 @@
           if ("files" in inputElm && audioElement) {
             audioFile = (inputElm.files as FileList)[0];
             audioElement.src = URL.createObjectURL(audioFile);
-            chatRingApp.save(audioFile);
+            chatRingApp.save({ file: audioFile });
             inputElm.form?.reset();
           }
         }}

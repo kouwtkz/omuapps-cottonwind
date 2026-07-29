@@ -1,5 +1,5 @@
 // src/routes/chatRing/index.ts
-export const prerender = true;'ti-'
+export const prerender = true; 'ti-'
 
 import { App, Identifier } from "@omujs/omu";
 import { NAMESPACE, ORIGIN } from "../define";
@@ -23,12 +23,15 @@ import { MeeIndexedDB } from "$lib/cottonwind/IndexedDB/MeeIndexedDB";
 export interface ChatRingData {
   key: string;
   file: File | null;
+  volume: number;
+  muted: boolean;
 }
 
 export class ChatRingApp {
   omu: Omu;
   key: string;
   db: MeeIndexedDB | null;
+  data: ChatRingData | null;
   indexedData: IndexedDataClass<ChatRingData>;
   constructor(omu: Omu) {
     const indexedData: IndexedDataClass<ChatRingData> = new IndexedDataClass({
@@ -37,8 +40,10 @@ export class ChatRingApp {
     });
     this.indexedData = indexedData;
     this.db = null;
+    this.data = null;
     MeeIndexedDB.create({
       dbName: "omuapps.cottonwind",
+      version: 2,
       onupgradeneeded(e, db) {
         indexedData.dbUpgradeneeded(e, db);
       },
@@ -53,24 +58,19 @@ export class ChatRingApp {
     this.key = APP_ID.join("source").key();
   }
   public async load() {
-    return this.indexedData.table.get({ query: this.key });
+    this.data = await this.indexedData.table.get({ query: this.key }) || null;
+    return this.data;
   }
-  public async save(file: File) {
-    return file.arrayBuffer().then((buffer) =>
-      this.indexedData.save({
-        data: {
-          key: this.key,
-          file,
-        },
-      }),
-    );
-  }
-  public async delete() {
-    this.indexedData.save({
-      data: {
-        key: this.key,
-        file: null,
-      },
-    });
+  public async save({ file, volume, muted }: { file?: File | null; volume?: number; muted?: boolean; }) {
+    let data: ChatRingData;
+    if (this.data) {
+      data = this.data;
+    } else {
+      data = { key: this.key, file: null, muted: false, volume: 1 };
+    }
+    if (typeof file !== "undefined") data.file = file;
+    if (typeof volume !== "undefined") data.volume = volume;
+    if (typeof muted !== "undefined") data.muted = muted;
+    return this.indexedData.save({ data });
   }
 }
