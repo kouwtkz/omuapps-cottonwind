@@ -71,6 +71,7 @@ export class ChatRingApp {
     if (typeof file !== "undefined") data.file = file;
     if (typeof volume !== "undefined") data.volume = volume;
     if (typeof muted !== "undefined") data.muted = muted;
+    if (!this.data) this.data = data;
     return this.indexedData.save({ data });
   }
 }
