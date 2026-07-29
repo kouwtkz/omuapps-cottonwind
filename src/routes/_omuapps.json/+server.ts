@@ -4,7 +4,7 @@ import { AppIndexRegistry } from '@omujs/omu';
 import { json } from '@sveltejs/kit';
 import { NAMESPACE } from '../define';
 import { TUTORIAL_APP } from '../tutorial';
-import { TUTORIAL_APP2 } from '../chatRing';
+import { CHAT_RING_APP } from '../chatRing';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = () => {
@@ -15,7 +15,7 @@ export const GET: RequestHandler = () => {
                 name: 'Cottonwind Apps', // 名前
                 note: 'こっとんうぃんどによるアプリ', // 1行の説明
             },
-            apps: [TUTORIAL_APP, TUTORIAL_APP2], // 配信するアプリの配列
+            apps: [TUTORIAL_APP, CHAT_RING_APP], // 配信するアプリの配列
         }).toJSON()
     );
 };

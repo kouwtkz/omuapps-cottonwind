@@ -1,45 +1,76 @@
 // src/routes/chatRing/index.ts
-export const prerender = true;
+export const prerender = true;'ti-'
 
-import { App } from "@omujs/omu";
+import { App, Identifier } from "@omujs/omu";
 import { NAMESPACE, ORIGIN } from "../define";
+export const APP_ID = new Identifier(NAMESPACE, "chat-ring");
 
 // 管理画面用のアプリ情報
-export const TUTORIAL_APP2 = new App(`${NAMESPACE}:chatRing`, {
-    url: `${ORIGIN}/chatRing`, // アプリの開かれるページのURL
-    metadata: {
-        locale: "ja", // アプリの推奨言語
-        name: "チュートリアルアプリ2", // アプリの名前
-        description: "初めてのアプリ2", // 一行の説明をつけることを推奨
-        icon: 'ti-align-box-left-middle' // アイコンのURL、もしくは先端にti-をつけることでTabler Iconsのアイコンを指定することができます
-    },
+export const CHAT_RING_APP = new App(`${NAMESPACE}:chatRing`, {
+  url: `${ORIGIN}/chatRing`, // アプリの開かれるページのURL
+  metadata: {
+    locale: "ja", // アプリの推奨言語
+    name: "チャット通知音", // アプリの名前
+    description: "チャットの新着の通知の音を鳴らすアプリです！", // 一行の説明をつけることを推奨
+    icon: "ti-bell-ringing", // アイコンのURL、もしくは先端にti-をつけることでTabler Iconsのアイコンを指定することができます
+  },
 });
 
-// 配信画面用のアプリ情報
-export const TUTORIAL_ASSET_APP2 = new App(`${NAMESPACE}:chatRing/app`, {
-    url: `${ORIGIN}/chatRing/asset`, // アセットの開かれるページのURL
-    parentId: TUTORIAL_APP2, // 親アプリを設定
-    metadata: {
-        locale: "ja",
-        name: "チュートリアルアセット2",
-    },
-});
+import { Omu } from "@omujs/omu";
+import { IndexedDataClass } from "$lib/cottonwind/IndexedDB/MeeIndexedDataClass";
+import { MeeIndexedDB } from "$lib/cottonwind/IndexedDB/MeeIndexedDB";
 
-import type { Writable } from "svelte/store";
-import { Omu } from '@omujs/omu';
+export interface ChatRingData {
+  key: string;
+  file: File | null;
+}
 
-type TutorialData = {
-    text: string
-};
+export class ChatRingApp {
+  omu: Omu;
+  key: string;
+  db: MeeIndexedDB | null;
+  indexedData: IndexedDataClass<ChatRingData>;
+  constructor(omu: Omu) {
+    const indexedData: IndexedDataClass<ChatRingData> = new IndexedDataClass({
+      name: "file",
+      primary: "key",
+    });
+    this.indexedData = indexedData;
+    this.db = null;
+    MeeIndexedDB.create({
+      dbName: "omuapps.cottonwind",
+      onupgradeneeded(e, db) {
+        indexedData.dbUpgradeneeded(e, db);
+      },
+      onsuccess(db) {
+        indexedData.dbSuccess(db);
+      },
+    }).then((db) => {
+      this.db = db;
+    });
 
-export class TutorialApp {
-    public tutorialData: Writable<TutorialData>;
-
-    constructor(omu: Omu) {
-        this.tutorialData = omu.registries.json<TutorialData>('tutorial_data', {
-            default: {
-                text: 'Default text'
-            }
-        }).compatSvelte();
-    }
+    this.omu = omu;
+    this.key = APP_ID.join("source").key();
+  }
+  public async load() {
+    return this.indexedData.table.get({ query: this.key });
+  }
+  public async save(file: File) {
+    return file.arrayBuffer().then((buffer) =>
+      this.indexedData.save({
+        data: {
+          key: this.key,
+          file,
+        },
+      }),
+    );
+  }
+  public async delete() {
+    this.indexedData.save({
+      data: {
+        key: this.key,
+        file: null,
+      },
+    });
+  }
 }
