@@ -19,7 +19,7 @@ export const GET: RequestHandler = () => {
         AppIndexRegistry.build({
             id: `${NAMESPACE}:apps`,
             meta: {
-                name: 'Cottonwind Apps', // 名前
+                name: dev ? 'Cottonwind Apps - Beta' : 'Cottonwind Apps', // 名前
                 note: 'こっとんうぃんどによるアプリ', // 1行の説明
             },
             apps
