@@ -16,7 +16,14 @@
   let audioFile: File | null = $state(null);
 
   // 必要な権限を要求します
-  omu.permissions.require(ChatPermissions.CHAT_PERMISSION_ID);
+  omu.permissions.require(
+    ChatPermissions.CHAT_PERMISSION_ID,
+    OmuPermissions.DASHBOARD_APP_STARTUP_PERMISSION_ID,
+  );
+  omu.onReady(async () => {
+    // 自動起動設定
+    omu.dashboard.apps.addStartup(CHAT_RING_APP);
+  })
 
   // ブラウザのみでAPIに接続します
   if (browser) {
